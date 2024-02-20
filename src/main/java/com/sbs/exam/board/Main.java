@@ -1,6 +1,7 @@
 package com.sbs.exam.board;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,7 +17,6 @@ public class Main {
     System.out.println("== 자바 텍스트 게시판 시작 ==");
 
     Scanner sc = new Scanner(System.in);
-    Article lastArticle = null;
     int articleLastId = 0;
 
     List<Article> articles = new ArrayList<>();
@@ -41,7 +41,6 @@ public class Main {
         int id = ++articleLastId;
 
         Article article = new Article(id, title, body);
-        lastArticle = article;
 
         articles.add(article);
         System.out.printf("%d번 게시물이 생성되었습니다.\n", article.id);
@@ -56,15 +55,16 @@ public class Main {
           Article article = articles.get(i);
           System.out.printf("%d / %s\n", article.id, article.title);
         }
+
       }
       else if (cmd.equals("/usr/article/detail")) {
 
-        if(lastArticle == null) {
+        Article article = articles.get(articles.size() - 1);
+
+        if(articles.isEmpty()) {
           System.out.println("게시물이 존재하지 않습니다.");
           continue;
         }
-
-        Article article = lastArticle;
 
         System.out.println("== 게시물 상세내용 ==");
         System.out.printf("번호 : %d\n", article.id);
