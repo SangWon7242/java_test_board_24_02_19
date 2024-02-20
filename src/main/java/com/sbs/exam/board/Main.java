@@ -43,6 +43,7 @@ public class Main {
         Article article = new Article(id, title, body);
         lastArticle = article;
 
+        articles.add(article);
         System.out.printf("%d번 게시물이 생성되었습니다.\n", article.id);
       }
       else if (cmd.equals("/usr/article/list")) {
