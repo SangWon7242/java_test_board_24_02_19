@@ -16,12 +16,15 @@ public class Main {
     System.out.println("== 자바 텍스트 게시판 시작 ==");
 
     Scanner sc = new Scanner(System.in);
-    int articleLastId = 0;
     Article lastArticle = null;
+    int articleLastId = 0;
 
     List<Article> articles = new ArrayList<>();
-
     makeTestData(articles);
+
+    if(articles.size() > 0) {
+      articleLastId = articles.get(articles.size() - 1).id;
+    }
 
     while (true) {
       System.out.printf("명령) ");
@@ -40,7 +43,6 @@ public class Main {
         Article article = new Article(id, title, body);
         lastArticle = article;
 
-        System.out.println("생성 된 게시물 객체 : " + article);
         System.out.printf("%d번 게시물이 생성되었습니다.\n", article.id);
       }
       else if (cmd.equals("/usr/article/list")) {
@@ -49,15 +51,6 @@ public class Main {
         System.out.println("번호 / 제목");
         System.out.println("===================");
 
-        // for문 이용해서 정순 출력
-        /*
-        for(int i = 0; i < articles.size(); i++) {
-          Article article = articles.get(i);
-          System.out.printf("%d / %s\n", article.id, article.title);
-        }
-        */
-
-        // for문 이용해서 역순 출력
         for(int i = articles.size() - 1; i >= 0; i--) {
           Article article = articles.get(i);
           System.out.printf("%d / %s\n", article.id, article.title);
