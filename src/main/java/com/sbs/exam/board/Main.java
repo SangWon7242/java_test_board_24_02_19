@@ -35,19 +35,8 @@ public class Main {
       Map<String, String> params = rq.getParams();
 
       if (rq.getUrlPath().equals("/usr/article/write")) {
-        System.out.println("== 게시물 작성 ==");
-        System.out.printf("제목 : ");
-        String title = sc.nextLine();
-
-        System.out.printf("내용 : ");
-        String body = sc.nextLine();
-
-        int id = ++articleLastId;
-
-        Article article = new Article(id, title, body);
-
-        articles.add(article);
-        System.out.printf("%d번 게시물이 생성되었습니다.\n", article.id);
+        actionUsrArticleWrite(sc, rq, articles, articleLastId);
+        ++articleLastId;
       }
       else if (rq.getUrlPath().equals("/usr/article/list")) {
         actionUsrArticleList(rq, articles);
@@ -93,6 +82,22 @@ public class Main {
 
     System.out.println("== 자바 텍스트 게시판 종료 ==");
     sc.close();
+  }
+
+  private static void actionUsrArticleWrite(Scanner sc, Rq rq, List<Article> articles, int articleLastId) {
+    System.out.println("== 게시물 작성 ==");
+    System.out.printf("제목 : ");
+    String title = sc.nextLine();
+
+    System.out.printf("내용 : ");
+    String body = sc.nextLine();
+
+    int id = ++articleLastId;
+
+    Article article = new Article(id, title, body);
+
+    articles.add(article);
+    System.out.printf("%d번 게시물이 생성되었습니다.\n", article.id);
   }
 
   private static void actionUsrArticleList(Rq rq, List<Article> articles) {
