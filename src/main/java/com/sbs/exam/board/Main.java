@@ -7,8 +7,13 @@ import java.util.stream.IntStream;
 
 public class Main {
 
-  static int articleLastId = 0;
-  static List<Article> articles = new ArrayList<>();
+  static int articleLastId;
+  static List<Article> articles;
+
+  static {
+    articleLastId = 0;
+    articles = new ArrayList<>();
+  }
 
   static void makeTestData() {
     // 테스트 게시물을 100개로 늘림
