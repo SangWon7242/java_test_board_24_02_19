@@ -51,4 +51,20 @@ public class Rq {
 
     session.setAttribute(key, value);
   }
+
+  public void removeSessionAttr(String loginedMember) {
+    Session session = Container.getSession();
+
+    session.removeAttribute(loginedMember);
+  }
+
+  public boolean isLogined(String loginedMember) {
+    Session session = Container.getSession();
+
+    return session.hasAttribute(loginedMember);
+  }
+
+  public boolean isLogout(String loginedMember) {
+    return !isLogined(loginedMember);
+  }
 }
