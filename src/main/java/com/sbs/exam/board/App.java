@@ -1,6 +1,8 @@
 package com.sbs.exam.board;
 
 import com.sbs.exam.board.container.Container;
+import com.sbs.exam.board.member.dto.Member;
+import com.sbs.exam.board.session.Session;
 
 import java.util.Scanner;
 
@@ -10,9 +12,18 @@ public class App {
     System.out.println("== 자바 텍스트 게시판 시작 ==");
 
     Scanner sc = Container.sc;
+    Session session = Container.getSession();
 
     while (true) {
-      System.out.printf("명령) ");
+      Member loginedMember = (Member)session.getAttribute("loginedMember");
+
+      String promptName = "명령";
+
+      if(loginedMember != null) {
+        promptName = loginedMember.loginId;
+      }
+
+      System.out.printf("%s) ", promptName);
       String cmd = sc.nextLine();
 
       Rq rq = new Rq(cmd);

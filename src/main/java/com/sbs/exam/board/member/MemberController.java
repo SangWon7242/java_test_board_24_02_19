@@ -1,8 +1,6 @@
 package com.sbs.exam.board.member;
 
-
 import com.sbs.exam.board.Rq;
-import com.sbs.exam.board.article.dto.Article;
 import com.sbs.exam.board.container.Container;
 import com.sbs.exam.board.member.dto.Member;
 
@@ -132,7 +130,6 @@ public class MemberController {
     // 로그인 아이디 유효성 검사 끝
 
     // 로그인 비밀번호 유효성 검사 시작
-
     int tryLoginPwCount = 0;
     int tryLoginPwMaxCount = 3;
 
@@ -161,6 +158,8 @@ public class MemberController {
       break;
     }
     // 로그인 비밀번호 유효성 검사 끝
+
+    rq.setSessionAttr("loginedMember", member); // key, value
 
     System.out.printf("\"%s\"님 로그인 되었습니다.\n", member.loginId);
   }
