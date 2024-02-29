@@ -8,17 +8,13 @@ import com.sbs.exam.board.container.Container;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.IntStream;
 
 public class ArticleController {
   private ArticleService articleService;
-  private List<Article> articles;
 
   public ArticleController() {
     articleService = Container.getArticleService();
     articleService.makeTestData();
-    articles = articleService.getArticles();
   }
 
   public void actionWrite(Rq rq) {
@@ -45,48 +41,17 @@ public class ArticleController {
   }
 
   public void showList(Rq rq) {
-    Map<String, String> params = rq.getParams();
-
     System.out.println("== 게시물 리스트 ==");
     System.out.println("===================");
     System.out.println("번호 / 제목");
     System.out.println("===================");
 
     String searchKeyword = rq.getParam("searchKeyword", "");
-
-    // articles : 정렬되지 않은 리모콘의 복사본(객체 주소) 있다.
-    List<Article> filteredArticles = articles;
-
-    // 검색 기능 시작
-    if (searchKeyword.length() > 0) {
-      filteredArticles = new ArrayList<>();
-
-      for (Article article : articles) {
-        boolean matched = article.getTitle().contains(searchKeyword) || article.getBody().contains(searchKeyword);
-
-        if (matched) {
-          filteredArticles.add(article);
-        }
-      }
-    }
-    // 검색 기능 끝
-
-    // 정렬 기능 시작
-    List<Article> sortedArticles = filteredArticles;
-
     String orderBy = rq.getParam("orderBy", "idDesc");
-    boolean orderByIdDesc = orderBy.equals("idDesc");
 
-    if (params.containsKey("orderBy") && params.get("orderBy").equals("idAsc")) {
-      orderByIdDesc = false;
-    }
+    List<Article> articles = articleService.getArticles(searchKeyword, orderBy);
 
-    if (orderByIdDesc) {
-      sortedArticles = Util.reverseList(sortedArticles);
-    }
-    // 정렬 기능 끝
-
-    for (Article article : sortedArticles) {
+    for (Article article : articles) {
       System.out.printf("%d / %s\n", article.getId(), article.getTitle());
     }
   }

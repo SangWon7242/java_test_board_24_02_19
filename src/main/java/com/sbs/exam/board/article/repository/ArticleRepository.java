@@ -1,5 +1,6 @@
 package com.sbs.exam.board.article.repository;
 
+import com.sbs.exam.board.Util;
 import com.sbs.exam.board.article.dto.Article;
 
 import java.util.ArrayList;
@@ -22,8 +23,34 @@ public class ArticleRepository {
     return id;
   }
 
-  public List<Article> getArticles() {
-    return articles;
+  public List<Article> getArticles(String searchKeyword, String orderBy) {
+    List<Article> filteredArticles = articles;
+
+    // 검색 기능 시작
+    if (searchKeyword.length() > 0) {
+      filteredArticles = new ArrayList<>();
+
+      for (Article article : articles) {
+        boolean matched = article.getTitle().contains(searchKeyword) || article.getBody().contains(searchKeyword);
+
+        if (matched) {
+          filteredArticles.add(article);
+        }
+      }
+    }
+    // 검색 기능 끝
+
+    // 정렬 기능 시작
+    List<Article> sortedArticles = filteredArticles;
+
+    boolean orderByIdDesc = orderBy.equals("idDesc");
+
+    if (orderByIdDesc) {
+      sortedArticles = Util.reverseList(sortedArticles);
+    }
+    // 정렬 기능 끝
+
+    return sortedArticles;
   }
 
   public Article findById(int id) {

@@ -26,8 +26,8 @@ public class ArticleService {
     return articleRepository.write(title, body);
   }
 
-  public List<Article> getArticles() {
-    return articleRepository.getArticles();
+  public List<Article> getArticles(String searchKeyword, String orderBy) {
+    return articleRepository.getArticles(searchKeyword, orderBy);
   }
 
   public Article findById(int id) {
