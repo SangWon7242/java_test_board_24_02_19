@@ -3,32 +3,19 @@ package com.sbs.exam.board.member;
 import com.sbs.exam.board.Rq;
 import com.sbs.exam.board.container.Container;
 import com.sbs.exam.board.member.dto.Member;
+import com.sbs.exam.board.member.service.MemberService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class MemberController {
-  private int memberLastId;
-  private List<Member> members;
+  private MemberService memberService;
 
   public MemberController() {
-    memberLastId = 0;
-    members = new ArrayList<>();
+    memberService = Container.getMemberService();
 
-    makeTestData();
-
-    if (members.size() > 0) {
-      memberLastId = members.get(members.size() - 1).getId();
-    }
-  }
-
-  void makeTestData() {
-    IntStream.rangeClosed(1, 3)
-        .forEach(
-            i -> members.add(new Member(i, "user" + i, "user" + i, "이름" + i)
-            )
-        );
+    memberService.makeTestData();
   }
 
   public void actionJoin(Rq rq) {
@@ -94,11 +81,8 @@ public class MemberController {
       break;
     }
 
-    int id = ++memberLastId;
+    memberService.join(loginId, loginPw, name);
 
-    Member member = new Member(id, loginId, loginPw, name);
-
-    members.add(member);
     System.out.printf("\"%s\"님 회원 가입 되었습니다.\n", name);
   }
 
@@ -124,7 +108,7 @@ public class MemberController {
         continue;
       }
 
-      member = getMemberByLoginId(loginId);
+      member = memberService.getMemberByLoginId(loginId);
 
       if (member == null) {
         System.out.println("입력하신 아이디는 없는 아이디입니다.");
@@ -168,16 +152,6 @@ public class MemberController {
     rq.setSessionAttr("loginedMember", member); // key, value
 
     System.out.printf("\"%s\"님 로그인 되었습니다.\n", member.getLoginId());
-  }
-
-  private Member getMemberByLoginId(String loginId) {
-    for (Member member : members) {
-      if (member.getLoginId().equals(loginId)) {
-        return member;
-      }
-    }
-
-    return null;
   }
 
   public void actionLogout(Rq rq) {
