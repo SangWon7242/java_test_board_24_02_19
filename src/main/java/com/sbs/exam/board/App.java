@@ -12,21 +12,21 @@ public class App {
     System.out.println("== 자바 텍스트 게시판 시작 ==");
 
     Scanner sc = Container.sc;
-    Session session = Container.getSession();
 
     while (true) {
-      Member loginedMember = (Member)session.getAttribute("loginedMember");
+      Rq rq = new Rq();
 
       String promptName = "명령";
 
-      if(loginedMember != null) {
+      if(rq.isLogined()) {
+        Member loginedMember = rq.getLoginedMember();
         promptName = loginedMember.getLoginId();
       }
 
       System.out.printf("%s) ", promptName);
       String cmd = sc.nextLine();
 
-      Rq rq = new Rq(cmd);
+      rq.setCommand(cmd);
 
       if (rq.getUrlPath().equals("/usr/article/write")) {
         Container.getArticleController().actionWrite(rq);
