@@ -58,7 +58,6 @@ public class Rq {
     return session.getAttribute(key);
   }
 
-
   public void setSessionAttr(String key, Member value) {
     Session session = Container.getSession();
 
