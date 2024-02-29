@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class MemberController {
-  int memberLastId;
-  List<Member> members;
+  private int memberLastId;
+  private List<Member> members;
 
   public MemberController() {
     memberLastId = 0;
@@ -19,7 +19,7 @@ public class MemberController {
     makeTestData();
 
     if (members.size() > 0) {
-      memberLastId = members.get(members.size() - 1).id;
+      memberLastId = members.get(members.size() - 1).getId();
     }
   }
 
@@ -156,7 +156,7 @@ public class MemberController {
         continue;
       }
 
-      if (member.loginPw.equals(loginPw) == false) {
+      if (member.getLoginPw().equals(loginPw) == false) {
         System.out.println("로그인 비밀번호가 일치하지 않습니다.");
         tryLoginPwCount++;
 
@@ -170,12 +170,12 @@ public class MemberController {
 
     rq.setSessionAttr("loginedMember", member); // key, value
 
-    System.out.printf("\"%s\"님 로그인 되었습니다.\n", member.loginId);
+    System.out.printf("\"%s\"님 로그인 되었습니다.\n", member.getLoginId());
   }
 
   private Member getMemberByLoginId(String loginId) {
     for (Member member : members) {
-      if (member.loginId.equals(loginId)) {
+      if (member.getLoginId().equals(loginId)) {
         return member;
       }
     }

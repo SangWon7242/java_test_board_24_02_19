@@ -1,25 +1,15 @@
 package com.sbs.exam.board.member.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Member {
-  public int id;
-  public String loginId;
-  public String loginPw;
-  public String name;
-
-  public Member(int id, String loginId, String loginPw, String name) {
-    this.id = id;
-    this.loginId = loginId;
-    this.loginPw = loginPw;
-    this.name = name;
-  }
-
-  @Override
-  public String toString() {
-    return "Member{" +
-        "id=" + id +
-        ", loginId='" + loginId + '\'' +
-        ", loginPw='" + loginPw + '\'' +
-        ", name='" + name + '\'' +
-        '}';
-  }
+  private int id;
+  private String loginId;
+  private String loginPw;
+  private String name;
 }

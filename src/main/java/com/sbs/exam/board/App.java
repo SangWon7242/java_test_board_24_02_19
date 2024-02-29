@@ -20,7 +20,7 @@ public class App {
       String promptName = "명령";
 
       if(loginedMember != null) {
-        promptName = loginedMember.loginId;
+        promptName = loginedMember.getLoginId();
       }
 
       System.out.printf("%s) ", promptName);
@@ -29,21 +29,21 @@ public class App {
       Rq rq = new Rq(cmd);
 
       if (rq.getUrlPath().equals("/usr/article/write")) {
-        Container.articleController.actionWrite(rq);
+        Container.getArticleController().actionWrite(rq);
       } else if (rq.getUrlPath().equals("/usr/article/list")) {
-        Container.articleController.showList(rq);
+        Container.getArticleController().showList(rq);
       } else if (rq.getUrlPath().equals("/usr/article/detail")) {
-        Container.articleController.showDetail(rq);
+        Container.getArticleController().showDetail(rq);
       } else if (rq.getUrlPath().equals("/usr/article/modify")) {
-        Container.articleController.actionModify(rq);
+        Container.getArticleController().actionModify(rq);
       } else if (rq.getUrlPath().equals("/usr/article/delete")) {
-        Container.articleController.actionDelete(rq);
+        Container.getArticleController().actionDelete(rq);
       } else if (rq.getUrlPath().equals("/usr/member/join")) {
-        Container.memberController.actionJoin(rq);
+        Container.getMemberController().actionJoin(rq);
       } else if (rq.getUrlPath().equals("/usr/member/login")) {
-        Container.memberController.actionLogin(rq);
+        Container.getMemberController().actionLogin(rq);
       } else if (rq.getUrlPath().equals("/usr/member/logout")) {
-        Container.memberController.actionLogout(rq);
+        Container.getMemberController().actionLogout(rq);
       } else if (rq.getUrlPath().equals("exit")) {
         System.out.println("프로그램을 종료합니다.");
         break;

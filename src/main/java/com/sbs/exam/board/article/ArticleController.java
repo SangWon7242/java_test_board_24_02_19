@@ -11,8 +11,8 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class ArticleController {
-  int articleLastId;
-  List<Article> articles;
+  private int articleLastId;
+  private List<Article> articles;
 
   public ArticleController() {
     articleLastId = 0;
@@ -21,7 +21,7 @@ public class ArticleController {
     makeTestData();
 
     if (articles.size() > 0) {
-      articleLastId = articles.get(articles.size() - 1).id;
+      articleLastId = articles.get(articles.size() - 1).getId();
     }
   }
 
@@ -47,7 +47,7 @@ public class ArticleController {
     Article article = new Article(id, title, body);
 
     articles.add(article);
-    System.out.printf("%d번 게시물이 생성되었습니다.\n", article.id);
+    System.out.printf("%d번 게시물이 생성되었습니다.\n", article.getId());
   }
 
   public void showList(Rq rq) {
@@ -68,7 +68,7 @@ public class ArticleController {
       filteredArticles = new ArrayList<>();
 
       for (Article article : articles) {
-        boolean matched = article.title.contains(searchKeyword) || article.body.contains(searchKeyword);
+        boolean matched = article.getTitle().contains(searchKeyword) || article.getBody().contains(searchKeyword);
 
         if (matched) {
           filteredArticles.add(article);
@@ -93,7 +93,7 @@ public class ArticleController {
     // 정렬 기능 끝
 
     for (Article article : sortedArticles) {
-      System.out.printf("%d / %s\n", article.id, article.title);
+      System.out.printf("%d / %s\n", article.getId(), article.getTitle());
     }
   }
 
@@ -113,9 +113,9 @@ public class ArticleController {
     }
 
     System.out.println("== 게시물 상세내용 ==");
-    System.out.printf("번호 : %d\n", article.id);
-    System.out.printf("제목 : %s\n", article.title);
-    System.out.printf("내용 : %s\n", article.body);
+    System.out.printf("번호 : %d\n", article.getId());
+    System.out.printf("제목 : %s\n", article.getTitle());
+    System.out.printf("내용 : %s\n", article.getBody());
   }
 
   public void actionModify(Rq rq) {
@@ -134,9 +134,9 @@ public class ArticleController {
     }
 
     System.out.printf("새 제목 : ");
-    article.title = Container.sc.nextLine();
+    article.setTitle(Container.sc.nextLine());
     System.out.printf("새 내용 : ");
-    article.body = Container.sc.nextLine();
+    article.setBody(Container.sc.nextLine());
 
     System.out.printf("%d번 게시물이 수정되었습니다.\n", id);
   }
@@ -163,7 +163,7 @@ public class ArticleController {
 
   private Article findById(int id, List<Article> articles) {
     for (Article article : articles) {
-      if (article.id == id) {
+      if (article.getId() == id) {
         return article;
       }
     }
